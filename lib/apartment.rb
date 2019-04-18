@@ -11,29 +11,28 @@ class Apartment < Dwelling
     @lease_start_date = lease_start_date
     @lease_end_date = lease_end_date
     @max_occupants = max_occupants
-    @current_occupants = 0
+    @current_occupants = []
   end
 
   def full?
-    @max_occupants == @current_occupants
+    @max_occupants == @current_occupants.size
   end
 
-  def add_roommate!(num)
+  def add_roommate!(tenant)
     if full?
       "No more tenants can move in here."
-    elsif @current_occupants + num > @max_occupants
-      "There is not enough space to add #{num} more roommates." + "\n" +
-      "There are currently #{@current_occupants} tenants in this apartment."
     else
-      @current_occupants += num
+      @current_occupants << tenant
+      "Tenant added to occupant list."
     end
   end
 
-  def remove_roommate!(num)
-    if @current_occupants == 0
+  def remove_roommate!
+    if @current_occupants.size == 0
       "There are currently no tenants living here"
     else
-      @current_occupants -= num
+      @current_occupants.pop
+      "Tenant removed from occupant list."
     end
   end
 end
