@@ -1,13 +1,15 @@
 require 'spec_helper'
 
 describe Occupant do
-  let(:person) { Occupant.new("John", "Doe") }
+  let(:occupant) { Occupant.new("John", "Doe") }
 
-  it "has a first name" do
-    expect(person.first_name).to eq("John")
-  end
+  describe "#initialize" do
+    it "has a first name" do
+      expect(occupant.first_name).to eq("John")
+    end
 
-  it "has a last name" do
-    expect(person.last_name).to eq("Doe")
+    it "has a last name" do
+      expect(occupant.last_name).to eq("Doe")
+    end
   end
 end
