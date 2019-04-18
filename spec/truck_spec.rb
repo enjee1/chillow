@@ -16,58 +16,35 @@ describe Truck do
       expect(truck.full?).to eq(false)
     end
 
-  describe "#add_box!" do
-    context "truck is empty" do
-      it "adds boxes to its cargo are" do
-        num_boxes = 4
-        num_boxes.times do
-          truck.add_box!(box_george)
-        end
-        expect(truck.full?).to eq(false)
-        expect(truck.cargo_area.size).to eq(num_boxes)
+  describe "#add_item" do
+    it "adds boxes to its cargo are" do
+      num_boxes = 4
+      num_boxes.times do
+        truck.add_item(box_george, truck.cargo_area)
       end
-    end
-
-    context "truck is already full" do
-      it "returns a message that the truck is full" do
-        existing_boxes_count = 5
-        existing_boxes_count.times do
-          truck.add_box!(box_jerry)
-        end
-        error_message = "No more boxes can be added to this truck."
-
-        expect(truck.add_box!(box_george)).to eq(error_message)
-        expect(truck.full?).to eq(true)
-      end
+      expect(truck.full?).to eq(false)
+      expect(truck.cargo_area.size).to eq(num_boxes)
     end
   end
 
-  describe "#remove_box!" do
-    context "truck has boxes in its cargo area" do
-      it "removes a box from the cargo area" do
-        existing_boxes_count = 5
-        existing_boxes_count.times do
-          truck.add_box!(box_jerry)
-        end
-        truck.remove_box!
-        expect(truck.cargo_area.size).to eq(existing_boxes_count - 1)
+  describe "#remove_item" do
+    it "removes a box from the cargo area" do
+      existing_boxes_count = 5
+      existing_boxes_count.times do
+        truck.add_item(box_jerry, truck.cargo_area)
       end
-    end
-    context "truck is empty" do
-      it "displays an error that there are no boxes in the truck to remove" do
-        error_message = "There are currently no boxes in the truck."
-        expect(truck.remove_box!).to eq("There are currently no boxes in the truck.")
-      end
+      truck.remove_item(truck.cargo_area)
+      expect(truck.cargo_area.size).to eq(existing_boxes_count - 1)
     end
   end
 
   describe "#unload_boxes!"
     it "unloads all the boxes of a specific owner" do
-      truck.add_box!(box_jerry)
-      truck.add_box!(box_jerry)
-      truck.add_box!(box_jerry)
-      truck.add_box!(box_george)
-      truck.add_box!(box_george)
+      truck.add_item(box_jerry, truck.cargo_area)
+      truck.add_item(box_jerry, truck.cargo_area)
+      truck.add_item(box_jerry, truck.cargo_area)
+      truck.add_item(box_george, truck.cargo_area)
+      truck.add_item(box_george, truck.cargo_area)
       truck.unload_boxes!(box_george)
       expect(truck.cargo_area.any? { |box| box.last_name == "Costanza" }).to eq(false)
       expect(truck.cargo_area.size).to eq(3)

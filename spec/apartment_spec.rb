@@ -31,52 +31,28 @@ describe Apartment do
     it "returns true when the maximum number of tenants have been added to
         the apartment" do
       4.times do
-        apartment.add_roommate!(occupant)
+        apartment.add_item(occupant, apartment.current_occupants)
       end
       expect(apartment.full?).to eq(true)
     end
   end
 
-  describe "#add_roommate!" do
-    context "apartment isn't full" do
-      it "adds a tenant to the current occupants list" do
-        apartment.add_roommate!(occupant)
-        expect(apartment.current_occupants[0]).to be_a(Occupant)
-        expect(apartment.current_occupants.size).to eq(1)
+  describe "#add_item!" do
+    it "adds a tenant to the current occupants list" do
+      apartment.add_item(occupant, apartment.current_occupants)
+      expect(apartment.current_occupants[0]).to be_a(Occupant)
+      expect(apartment.current_occupants.size).to eq(1)
       end
-    end
-
-    context "apartment is at maximum capacity for tenants" do
-      it "displays a message that the apartment is full and no further
-        tenants can be added" do
-        error_message = "No more tenants can move in here."
-        4.times do
-          apartment.add_roommate!(occupant)
-        end
-        expect(apartment.add_roommate!(occupant)).to eq(error_message)
-      end
-    end
   end
 
-  describe "#remove_roommate!" do
-    context "the apartment has tenants living in it" do
-      it "removes a tenants from the current occupants" do
-        confirmation = "Tenant removed from occupant list."
-        2.times do
-          apartment.add_roommate!(occupant)
-        end
-        expect(apartment.remove_roommate!).to eq("Tenant removed from " +
-              "occupant list.")
-      end
-    end
 
-    context "the apartment is vacant" do
-      it "displays a message that the apartment is vacant" do
-        error_message = "There are currently no tenants living here"
-        expect(apartment.remove_roommate!).to eq("There are currently no " +
-            "tenants living here")
+  describe "#remove_item" do
+    it "removes a tenants from the current occupants" do
+      2.times do
+        apartment.add_item(occupant, apartment.current_occupants)
       end
+      apartment.remove_item(apartment.current_occupants)
+      expect(apartment.current_occupants.size).to eq(1)
     end
   end
-
 end
