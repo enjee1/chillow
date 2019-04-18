@@ -1,8 +1,10 @@
 require_relative "dwelling"
+require_relative "update_contents"
 
 class Apartment < Dwelling
   attr_reader :rent, :lease_start_date, :lease_end_date,
               :max_occupants, :current_occupants
+  include UpdateContents
 
   def initialize(address, city, state, zip_code, rent,
       lease_start_date, lease_end_date, max_occupants)

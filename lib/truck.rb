@@ -1,8 +1,10 @@
 require_relative "box"
 require_relative "occupant"
+require_relative "update_contents"
 
 class Truck
   attr_reader :max_boxes, :cargo_area
+  include UpdateContents
 
   def initialize(max_boxes)
     @max_boxes = max_boxes
@@ -17,23 +19,7 @@ class Truck
     end
   end
 
-  def add_box!(box)
-    if full?
-      "No more boxes can be added to this truck."
-    else
-      @cargo_area << box
-    end
-  end
-
-  def remove_box!
-    if @cargo_area.size == 0
-      "There are currently no boxes in the truck."
-    else
-      @cargo_area.pop
-    end
-  end
-
   def unload_boxes!(occupant_name)
-    @cargo_area.reject! { |box| box.last_name == occupant_name.last_name }    
+    @cargo_area.reject! { |box| box.last_name == occupant_name.last_name }
   end
 end
