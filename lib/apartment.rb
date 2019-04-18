@@ -4,6 +4,15 @@ class Apartment < Dwelling
   attr_reader :rent, :lease_start_date, :lease_end_date,
               :max_occupants, :current_occupants
 
+  def initialize(address, city, state, zip_code, rent,
+      lease_start_date, lease_end_date, max_occupants)
+    super(address, city, state, zip_code)
+    @rent = rent
+    @lease_start_date = lease_start_date
+    @lease_end_date = lease_end_date
+    @max_occupants = max_occupants
+    @current_occupants = 0
+  end
 
   def full?
     @max_occupants == @current_occupants

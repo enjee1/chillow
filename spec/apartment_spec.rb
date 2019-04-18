@@ -2,24 +2,25 @@ require "spec_helper"
 
 describe Apartment do
   let(:apartment) { Apartment.new(
-    "129 West 81st Street", "New York", "10211", 7000, "September 1, 2020",
+    "129 West 81st Street", "New York", "NY", "10211", 7000, "September 1, 2020",
     "August 31, 2023", 4) }
 
-  it "has a monthly rent amount" do
-    expect(apartment.rent).to eq(7000)
-  end
+  describe "initialize"
+    it "has a monthly rent amount" do
+      expect(apartment.rent).to eq(7000)
+    end
 
-  it "has a lease start date" do
-    expect(apartment.lease_start_date).to eq("September 1, 2020")
-  end
+    it "has a lease start date" do
+      expect(apartment.lease_start_date).to eq("September 1, 2020")
+    end
 
-  it "has a lease end date" do
-    expect(apartment.lease_end_date).to eq("August 31, 2023")
-  end
+    it "has a lease end date" do
+      expect(apartment.lease_end_date).to eq("August 31, 2023")
+    end
 
-  it "has a maximum occupancy" do
-    expect(apartment.max_occupants).to eq(4)
-  end
+    it "has a maximum occupancy" do
+      expect(apartment.max_occupants).to eq(4)
+    end
 
   describe "#add_roommate!" do
     context "apartment isn't full" do
@@ -28,6 +29,7 @@ describe Apartment do
         expect(apartment.current_occupants).to eq(2)
       end
     end
+
     context "apartment is at maximum capacity for tenants" do
       it "displays a message that the apartment is full and no further
         tenants can be added" do
@@ -35,6 +37,7 @@ describe Apartment do
         expect(apartment.add_roommate!(1)).to eq("No more tenants can move in here.")
       end
     end
+
     context "apartment is not at maximum capacity, but only a certain number of
       tenants can be added" do
         it "displays a message that adding more tenants will exceed the maximum capacity" do
@@ -59,7 +62,6 @@ describe Apartment do
         error_message = "There are currently no tenants living here"
         expect(apartment.remove_roommate!(2)).to eq(error_message)
       end
-    end
     end
   end
 
